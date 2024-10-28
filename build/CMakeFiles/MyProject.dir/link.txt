@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/MyProject.dir/src/main.cpp.o CMakeFiles/MyProject.dir/src/shader.cpp.o -o MyProject  -Wl,-rpath,/usr/local/lib /usr/lib/x86_64-linux-gnu/libGLEW.so /usr/local/lib/libsfml-graphics.so.2.6.1 /usr/local/lib/libsfml-audio.so.2.6.1 /usr/lib/x86_64-linux-gnu/libGL.so /usr/local/lib/libsfml-window.so.2.6.1 /usr/local/lib/libsfml-system.so.2.6.1 

@@ -1,0 +1,3 @@
+/home/max/cpp-projects/voxel-game/build/CMakeFiles/MyProject.dir
+/home/max/cpp-projects/voxel-game/build/CMakeFiles/edit_cache.dir
+/home/max/cpp-projects/voxel-game/build/CMakeFiles/rebuild_cache.dir
