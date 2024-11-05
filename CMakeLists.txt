@@ -6,8 +6,8 @@ project(MyProject)
 set(CMAKE_CXX_STANDARD 17)
 
 # Define the path to your source files
-file(GLOB_RECURSE SOURCES "${PROJECT_SOURCE_DIR}/src/*.cpp")
-file(GLOB_RECURSE HEADERS "${PROJECT_SOURCE_DIR}/src/*.h")
+file(GLOB_RECURSE SOURCES "${PROJECT_SOURCE_DIR}/src/*.cpp" "${PROJECT_SOURCE_DIR}/src/glad.c")
+file(GLOB_RECURSE HEADERS "${PROJECT_SOURCE_DIR}/src/*.h" "${PROJECT_SOURCE_DIR}/include/*.h")
 
 # Add executable (including headers for IDEs, though they are not compiled)
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
@@ -15,20 +15,17 @@ add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 # Find SFML components including audio
 find_package(SFML 2.6 COMPONENTS system window graphics audio REQUIRED)
 
-# Link Glew library
-find_package(GLEW REQUIRED)
-target_link_libraries(MyProject GLEW::GLEW)
-
 # Find OpenGL
 find_package(OpenGL REQUIRED)
 
-# Include directories (make sure to add src and Assets if needed)
+# Include directories (add src, include, and Assets if needed)
 target_include_directories(${PROJECT_NAME} PRIVATE 
     ${PROJECT_SOURCE_DIR}/src
+    ${PROJECT_SOURCE_DIR}/include
     ${PROJECT_SOURCE_DIR}/Assets
 )
 
-# Link SFML and OpenGL
+# Link SFML, GLAD, and OpenGL
 target_link_libraries(${PROJECT_NAME} sfml-system sfml-window sfml-graphics sfml-audio OpenGL::GL)
 
 # Copy Assets directory to the build directory

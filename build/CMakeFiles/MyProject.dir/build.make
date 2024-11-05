@@ -69,10 +69,24 @@ include CMakeFiles/MyProject.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/MyProject.dir/flags.make
 
+CMakeFiles/MyProject.dir/src/glad.c.o: CMakeFiles/MyProject.dir/flags.make
+CMakeFiles/MyProject.dir/src/glad.c.o: ../src/glad.c
+CMakeFiles/MyProject.dir/src/glad.c.o: CMakeFiles/MyProject.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/max/cpp-projects/voxel-game/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/MyProject.dir/src/glad.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/MyProject.dir/src/glad.c.o -MF CMakeFiles/MyProject.dir/src/glad.c.o.d -o CMakeFiles/MyProject.dir/src/glad.c.o -c /home/max/cpp-projects/voxel-game/src/glad.c
+
+CMakeFiles/MyProject.dir/src/glad.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/MyProject.dir/src/glad.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/max/cpp-projects/voxel-game/src/glad.c > CMakeFiles/MyProject.dir/src/glad.c.i
+
+CMakeFiles/MyProject.dir/src/glad.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/MyProject.dir/src/glad.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/max/cpp-projects/voxel-game/src/glad.c -o CMakeFiles/MyProject.dir/src/glad.c.s
+
 CMakeFiles/MyProject.dir/src/main.cpp.o: CMakeFiles/MyProject.dir/flags.make
 CMakeFiles/MyProject.dir/src/main.cpp.o: ../src/main.cpp
 CMakeFiles/MyProject.dir/src/main.cpp.o: CMakeFiles/MyProject.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/max/cpp-projects/voxel-game/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/MyProject.dir/src/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/max/cpp-projects/voxel-game/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/MyProject.dir/src/main.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MyProject.dir/src/main.cpp.o -MF CMakeFiles/MyProject.dir/src/main.cpp.o.d -o CMakeFiles/MyProject.dir/src/main.cpp.o -c /home/max/cpp-projects/voxel-game/src/main.cpp
 
 CMakeFiles/MyProject.dir/src/main.cpp.i: cmake_force
@@ -83,32 +97,17 @@ CMakeFiles/MyProject.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MyProject.dir/src/main.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/max/cpp-projects/voxel-game/src/main.cpp -o CMakeFiles/MyProject.dir/src/main.cpp.s
 
-CMakeFiles/MyProject.dir/src/shader.cpp.o: CMakeFiles/MyProject.dir/flags.make
-CMakeFiles/MyProject.dir/src/shader.cpp.o: ../src/shader.cpp
-CMakeFiles/MyProject.dir/src/shader.cpp.o: CMakeFiles/MyProject.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/max/cpp-projects/voxel-game/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/MyProject.dir/src/shader.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MyProject.dir/src/shader.cpp.o -MF CMakeFiles/MyProject.dir/src/shader.cpp.o.d -o CMakeFiles/MyProject.dir/src/shader.cpp.o -c /home/max/cpp-projects/voxel-game/src/shader.cpp
-
-CMakeFiles/MyProject.dir/src/shader.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MyProject.dir/src/shader.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/max/cpp-projects/voxel-game/src/shader.cpp > CMakeFiles/MyProject.dir/src/shader.cpp.i
-
-CMakeFiles/MyProject.dir/src/shader.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MyProject.dir/src/shader.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/max/cpp-projects/voxel-game/src/shader.cpp -o CMakeFiles/MyProject.dir/src/shader.cpp.s
-
 # Object files for target MyProject
 MyProject_OBJECTS = \
-"CMakeFiles/MyProject.dir/src/main.cpp.o" \
-"CMakeFiles/MyProject.dir/src/shader.cpp.o"
+"CMakeFiles/MyProject.dir/src/glad.c.o" \
+"CMakeFiles/MyProject.dir/src/main.cpp.o"
 
 # External object files for target MyProject
 MyProject_EXTERNAL_OBJECTS =
 
+MyProject: CMakeFiles/MyProject.dir/src/glad.c.o
 MyProject: CMakeFiles/MyProject.dir/src/main.cpp.o
-MyProject: CMakeFiles/MyProject.dir/src/shader.cpp.o
 MyProject: CMakeFiles/MyProject.dir/build.make
-MyProject: /usr/lib/x86_64-linux-gnu/libGLEW.so
 MyProject: /usr/local/lib/libsfml-graphics.so.2.6.1
 MyProject: /usr/local/lib/libsfml-audio.so.2.6.1
 MyProject: /usr/lib/x86_64-linux-gnu/libGL.so

@@ -1,7 +1,10 @@
-#include "Shader.h"
-#include <math.h>
-#include <SFML/System/Clock.hpp>
-#include <SFML/System/Time.hpp>
+#include "../include/Shader.h"
+#include <GL/glu.h>        // OpenGL Utility Library (GLU) functions, if needed
+#include <SFML/Window.hpp> // SFML window creation and event handling
+#include <SFML/System/Clock.hpp> // SFML for timing functions
+#include <SFML/System/Time.hpp>  // SFML time handling
+#include <cmath>                 // For math functions like std::sin
+#include <iostream>              // For standard I/O (e.g., std::cerr)
 
 void setWireframe(bool wireFrame) {
   if (wireFrame)
@@ -11,7 +14,6 @@ void setWireframe(bool wireFrame) {
 }
 
 int main() {
-
   // SFML Window and Context Settings
   sf::ContextSettings settings;
   settings.majorVersion = 3;
@@ -21,11 +23,9 @@ int main() {
                     settings);
   window.setVerticalSyncEnabled(true);
 
-  // Activate window and initialize GLEW
-  window.setActive(true);
-  glewExperimental = GL_TRUE; // Required to use modern OpenGL
-  if (glewInit() != GLEW_OK) {
-    std::cerr << "Failed to initialize GLEW" << std::endl;
+  // Init Glad
+  if (!gladLoadGLLoader((GLADloadproc)sf::Context::getFunction)) {
+    std::cerr << "Failed to initialize GLAD" << std::endl;
     return -1;
   }
 
@@ -90,9 +90,9 @@ int main() {
   // glBindBuffer(GL_ARRAY_BUFFER, 0); // Unbind VBO
   // glBindVertexArray(0);             // Unbind VAO
 
-  // Configure Shader program
-  Shader regularShader("../shaders/firstVertShader.vert",
-                       "../shaders/firstShader.frag");
+  // Create Shaders
+  ogl::Shader shader("../shaders/firstVertShader.vert",
+                     "../shaders/firstShader.frag");
 
   // Instantiate sfml clock object
   sf::Clock clock;
@@ -112,13 +112,12 @@ int main() {
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f); // Set background color
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    // offset triangle
+    int hOffsetLocation = glGetUniformLocation(shader.ID, "offset");
+    shader.use();
+    glUniform3f(hOffsetLocation, 0.5f, 0.0f, 0.0f);
+
     // Draw the triangle
-    // setWireframe(false);
-    float timeValue = clock.getElapsedTime().asSeconds();
-    float greenValue = std::sin(timeValue) / 2.0f + 0.5f;
-    // int vertexColorLocation = regularShader.getUniformLocation("ourColor");
-    regularShader.use();
-    // glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, 3);
     glBindVertexArray(0);

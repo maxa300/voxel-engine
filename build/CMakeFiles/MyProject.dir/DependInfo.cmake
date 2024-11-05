@@ -8,8 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/home/max/cpp-projects/voxel-game/src/glad.c" "CMakeFiles/MyProject.dir/src/glad.c.o" "gcc" "CMakeFiles/MyProject.dir/src/glad.c.o.d"
   "/home/max/cpp-projects/voxel-game/src/main.cpp" "CMakeFiles/MyProject.dir/src/main.cpp.o" "gcc" "CMakeFiles/MyProject.dir/src/main.cpp.o.d"
-  "/home/max/cpp-projects/voxel-game/src/shader.cpp" "CMakeFiles/MyProject.dir/src/shader.cpp.o" "gcc" "CMakeFiles/MyProject.dir/src/shader.cpp.o.d"
   )
 
 # Targets to which this target links.
