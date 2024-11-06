@@ -9,8 +9,6 @@
 #include <sstream>
 #include <iostream>
 
-namespace ogl {
-
 class Shader {
 public:
   // the program ID
@@ -108,7 +106,5 @@ private:
     }
   }
 };
-
-} // namespace ogl
 
 #endif

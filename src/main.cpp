@@ -5,6 +5,8 @@
 #include <SFML/System/Time.hpp>  // SFML time handling
 #include <cmath>                 // For math functions like std::sin
 #include <iostream>              // For standard I/O (e.g., std::cerr)
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 
 void setWireframe(bool wireFrame) {
   if (wireFrame)
@@ -29,12 +31,12 @@ int main() {
     return -1;
   }
 
-  // vertices for 2 triangles to make rectangle
   float vertices[] = {
-      // positions       // colors
-      0.5f,  -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, // bottom right
-      -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, // bottom left
-      0.0f,  0.5f,  0.0f, 0.0f, 0.0f, 1.0f  // top
+    // positions      // colors         // texture coords
+    0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, // top right
+    0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // bottom right
+    -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, // bottom left
+    -0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f // top left
   };
 
   unsigned int indices[] = {
@@ -43,59 +45,77 @@ int main() {
       1, 2, 3  // second triangle
   };
 
-  // stores VBO states and data while bound
-  unsigned int VAO;
+  unsigned int VBO, VAO, EBO;
   glGenVertexArrays(1, &VAO);
+  glGenBuffers(1, &VBO);
+  glGenBuffers(1, &EBO);
+
   glBindVertexArray(VAO);
 
-  // configure VBO that will be stored in VAO
-  unsigned int VBO;
-  glGenBuffers(1, &VBO);
   glBindBuffer(GL_ARRAY_BUFFER, VBO);
   glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-  // Position attribute
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)0);
+
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+  // position attribute
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
   glEnableVertexAttribArray(0);
-  // Color attribute
-  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float),
-                        (void *)(3 * sizeof(float)));
+  // color attribute
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
   glEnableVertexAttribArray(1);
-
-  // unbind VBO
-  glBindBuffer(GL_ARRAY_BUFFER, 0);
-  // unbind VAO (which will be rebound for later use)
-  glBindVertexArray(0);
-
-  // // Set up Element Buffer Object
-  // unsigned int EBO;
-  // glGenBuffers(1, &EBO);
-  //
-  // // Set up vertex buffer and vertex array objects
-  // unsigned int VBO, VAO;
-  // glGenVertexArrays(1, &VAO);
-  // glGenBuffers(1, &VBO);
-  //
-  // glBindVertexArray(VAO);
-  //
-  // glBindBuffer(GL_ARRAY_BUFFER, VBO);
-  // glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-  //
-  // // copy our index array in a element buffer for OpenGL to use
-  // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-  // glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices,
-  //              GL_STATIC_DRAW);
-  // glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void
-  // *)0); glEnableVertexAttribArray(0);
-  //
-  // glBindBuffer(GL_ARRAY_BUFFER, 0); // Unbind VBO
-  // glBindVertexArray(0);             // Unbind VAO
+  // texture coord attribute
+  glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+  glEnableVertexAttribArray(2);
 
   // Create Shaders
-  ogl::Shader shader("../shaders/firstVertShader.vert",
+  Shader shader("../shaders/firstVertShader.vert",
                      "../shaders/firstShader.frag");
 
   // Instantiate sfml clock object
   sf::Clock clock;
+
+  // Process of Generating a texture
+  unsigned int texture;
+  glGenTextures(1, &texture);
+  glBindTexture((GL_TEXTURE_2D), texture);
+  // Set the texture wrapping/filtering (on currently bound texture)
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+  // Load and generate the texture
+  int width, height, nrChannels;
+
+  stbi_set_flip_vertically_on_load(1);
+  unsigned char *data = stbi_load("../textures/grass_dirt.jpg", &width, &height, &nrChannels, 0);
+  if (data) {
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+    glGenerateMipmap(GL_TEXTURE_2D);
+  } else {
+    std::cout << "Failed to load texture" << std::endl;
+  }
+  stbi_image_free(data);
+
+  unsigned int texture2;
+  glGenTextures(1, &texture2);
+  glBindTexture((GL_TEXTURE_2D), texture2);
+  // Set the texture wrapping/filtering (on currently bound texture)
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+  unsigned char *data2 = stbi_load("../textures/happy_face.png", &width, &height, &nrChannels, 0);
+  if (data2) {
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA,
+    GL_UNSIGNED_BYTE, data2);
+    glGenerateMipmap(GL_TEXTURE_2D);
+  } else {
+    std::cout << "Failed to load texture" << std::endl;
+  }
+  stbi_image_free(data2);
 
   // Main loop
   bool running = true;
@@ -110,17 +130,21 @@ int main() {
 
     // Render
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f); // Set background color
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT);
 
-    // offset triangle
-    int hOffsetLocation = glGetUniformLocation(shader.ID, "offset");
+    // Texture
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, texture2);
+
     shader.use();
-    glUniform3f(hOffsetLocation, 0.5f, 0.0f, 0.0f);
+    glUniform1i(glGetUniformLocation(shader.ID, "ourTexture"), 0);
+    glUniform1i(glGetUniformLocation(shader.ID, "texture2"), 1);
 
-    // Draw the triangle
+    // Draw the triangles
     glBindVertexArray(VAO);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
-    glBindVertexArray(0);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
     // Display the frame
     window.display();

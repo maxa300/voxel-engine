@@ -5,13 +5,13 @@
 # compile CXX with /usr/bin/c++
 C_DEFINES = 
 
-C_INCLUDES = -I/home/max/cpp-projects/voxel-game/src -I/home/max/cpp-projects/voxel-game/include -I/home/max/cpp-projects/voxel-game/Assets
+C_INCLUDES = -I/home/max/cpp-projects/voxel-game/src -I/home/max/cpp-projects/voxel-game/include -I/home/max/cpp-projects/voxel-game/Assets -I/home/max/cpp-projects/voxel-game/textures
 
-C_FLAGS = -g
+C_FLAGS = 
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/max/cpp-projects/voxel-game/src -I/home/max/cpp-projects/voxel-game/include -I/home/max/cpp-projects/voxel-game/Assets
+CXX_INCLUDES = -I/home/max/cpp-projects/voxel-game/src -I/home/max/cpp-projects/voxel-game/include -I/home/max/cpp-projects/voxel-game/Assets -I/home/max/cpp-projects/voxel-game/textures
 
-CXX_FLAGS = -g
+CXX_FLAGS = 
 

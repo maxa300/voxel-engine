@@ -39,7 +39,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "MyProject::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-MyProject-Debug-66e7894846d6e4b97268.json",
+					"jsonFile" : "target-MyProject-Debug-7329f33e3ee9cbe359c6.json",
 					"name" : "MyProject",
 					"projectIndex" : 0
 				}
@@ -49,12 +49,12 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/home/max/cpp-projects/voxel-game/build",
+		"build" : "/home/max/cpp-projects/voxel-game/cmake-build-debug",
 		"source" : "/home/max/cpp-projects/voxel-game"
 	},
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 3
+		"minor" : 7
 	}
 }
